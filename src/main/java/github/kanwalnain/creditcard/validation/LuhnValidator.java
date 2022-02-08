@@ -6,6 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 public class LuhnValidator implements ConstraintValidator<LuhnValidation, String> {
 
     public boolean isValid(String number, ConstraintValidatorContext cxt) {
+
         int sum = 0;
         boolean alternate = false;
         for (int i = number.length() - 1; i >= 0; i--) {
