@@ -1,8 +1,11 @@
 package github.kanwalnain.creditcard.model;
 
 
+import github.kanwalnain.creditcard.validation.LuhnValidation;
+
 public class CreditCardRequest {
 
+    @LuhnValidation
     private String cardNumber;
     private String givenName;
     private Double limit;

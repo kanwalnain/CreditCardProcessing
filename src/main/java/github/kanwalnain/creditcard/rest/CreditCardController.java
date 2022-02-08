@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,15 +23,16 @@ public class CreditCardController {
     private CardDetailsRepository cardDetailsRepository;
 
     @PostMapping(path = "/creditCards")
-    public String addCreditCard(@RequestBody CreditCardRequest creditCardRequest){
-        cardDetailsRepository.CARD_DB.put(i, creditCardRequest);
-        i++;
-        return "Card inserted with id: " + (i-1);
+    public String addCreditCard(@Valid @RequestBody CreditCardRequest creditCardRequest){
+
+
+
+        return "Card inserted with id: " + creditCardRequest;
     }
 
 
     @GetMapping(path = "/creditCards")
     public Collection<CreditCardRequest> getCreditCards(){
-        return cardDetailsRepository.CARD_DB.values();
+        return null;
     }
 }

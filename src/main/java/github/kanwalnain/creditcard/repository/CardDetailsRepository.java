@@ -8,6 +8,4 @@ import java.util.HashMap;
 @Repository
 public class CardDetailsRepository {
 
-    public HashMap<Integer, CreditCardRequest> CARD_DB= new HashMap<>();
-
 }

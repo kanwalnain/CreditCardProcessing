@@ -7,7 +7,7 @@ WORKDIR /credit-card-service
 
 # Dividing copy into two steps to ensure that we download dependencies
 # only when pom.xml changes
-COPY pom.xml .
+COPY pom.xml .c
 # dependency:go-offline - Goal that resolves all project dependencies,
 # including plugins and reports and their dependencies. -B -> Batch mode
 RUN mvn dependency:go-offline -B
