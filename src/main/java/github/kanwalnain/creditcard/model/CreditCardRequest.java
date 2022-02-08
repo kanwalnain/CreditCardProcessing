@@ -12,13 +12,10 @@ public class CreditCardRequest {
 
     @Size(max = 19, message = "Max length can be up to 19.")
     @LuhnValidation
-    @NotEmpty
     private String cardNumber;
 
-    @NotEmpty
     private String givenName;
 
-    @NotEmpty
     private Double limit;
 
     public CreditCardRequest(String cardNumber, String givenName, Double limit) {
