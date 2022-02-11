@@ -1,27 +1,41 @@
 package github.kanwalnain.creditcard.model;
 
 
+import github.kanwalnain.creditcard.entity.CreditCardEntity;
 import github.kanwalnain.creditcard.validation.LuhnValidation;
-import org.hibernate.validator.constraints.Length;
+
+
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
 public class CreditCardRequest {
 
+    //TODO: Move validation message to properties.
     @Size(max = 19, message = "Max length can be up to 19.")
+    @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="Not a numeric value.")
     @LuhnValidation
+    @NotEmpty
     private String cardNumber;
 
+    @NotEmpty
     private String givenName;
 
     private Double limit;
+
 
     public CreditCardRequest(String cardNumber, String givenName, Double limit) {
         this.cardNumber = cardNumber;
         this.givenName = givenName;
         this.limit = limit;
+    }
+
+    public CreditCardRequest(CreditCardEntity creditCardEntity) {
+         this.cardNumber = creditCardEntity.getCreditCardNumber();
+         this.givenName = creditCardEntity.getCreditCardNumber();
+         this.limit = creditCardEntity.getCreditLimit().doubleValue();
     }
 
     public String getCardNumber() {

@@ -2,6 +2,7 @@ package github.kanwalnain.creditcard.rest;
 
 import github.kanwalnain.creditcard.model.CreditCardRequest;
 import github.kanwalnain.creditcard.repository.CardDetailsRepository;
+import github.kanwalnain.creditcard.service.CreditCardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,16 @@ public class CreditCardController {
     private final Logger logger = LoggerFactory.getLogger(CreditCardController.class);
     private int i=1;
     @Autowired
-    private CardDetailsRepository cardDetailsRepository;
+    private CreditCardService creditCardService;
 
     @PostMapping(path = "/creditCards")
-    public String addCreditCard(@Valid @RequestBody CreditCardRequest creditCardRequest){
-
-
-
-        return "Card inserted with id: " + creditCardRequest;
+    public CreditCardRequest addCreditCard(@Valid @RequestBody CreditCardRequest creditCardRequest){
+        return creditCardService.addCreditCard(creditCardRequest);
     }
 
 
     @GetMapping(path = "/creditCards")
     public Collection<CreditCardRequest> getCreditCards(){
-        return null;
+        return creditCardService.getAllCreditCards();
     }
 }

@@ -2,10 +2,15 @@ package github.kanwalnain.creditcard.entity;
 
 import github.kanwalnain.creditcard.model.CreditCardRequest;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "customers")
 public class CreditCardEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String creditCardNumber;
     private BigDecimal creditLimit;
@@ -14,6 +19,7 @@ public class CreditCardEntity {
     private String currency = "GBP";
 
     public CreditCardEntity() {
+
     }
 
     public CreditCardEntity(CreditCardRequest creditCardRequest) {
@@ -22,8 +28,6 @@ public class CreditCardEntity {
         givenName = creditCardRequest.getGivenName();
         balance = BigDecimal.ZERO;
     }
-
-
 
     public String getCreditCardNumber() {
         return creditCardNumber;
