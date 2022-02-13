@@ -6,7 +6,6 @@ import github.kanwalnain.creditcard.model.CreditCardRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.GsonTester;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
@@ -25,7 +24,7 @@ public class CreditCartControllerIntgTest {
 
 
     @Test
-    public void testAddCreditCardApi(){
+    public void testAddCreditCardApiValidCase(){
         CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User",250.0);
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
@@ -36,6 +35,19 @@ public class CreditCartControllerIntgTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    public void testAddCreditCardApiInvalidCreditCard(){
+        CreditCardRequest creditCardRequest = new CreditCardRequest("555555423425555554444", "Dummy User",250.0);
+        Gson gson = new Gson();
+        headers.add("Content-Type", "application/json");
+        HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/creditCards"),
+                HttpMethod.POST, entity, String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("[\"[cardNumber:"+creditCardRequest.getCardNumber()+"] Invalid credit card number does not satisfy Luhn 10.\"]", response.getBody());
+
+    }
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port +"/api"+ uri;
     }
