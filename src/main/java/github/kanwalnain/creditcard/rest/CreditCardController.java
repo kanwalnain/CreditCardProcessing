@@ -1,10 +1,13 @@
 package github.kanwalnain.creditcard.rest;
 
+import github.kanwalnain.creditcard.constant.ErrorMessage;
 import github.kanwalnain.creditcard.model.CreditCardRequest;
 import github.kanwalnain.creditcard.service.CreditCardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -32,8 +36,8 @@ public class CreditCardController {
      * @return confirmation of credit card addition.
      */
     @PostMapping(path = "/creditCards")
-    public CreditCardRequest addCreditCard(@Valid @RequestBody CreditCardRequest creditCardRequest){
-        return creditCardService.addCreditCard(creditCardRequest);
+    public ResponseEntity addCreditCard(@Valid @RequestBody CreditCardRequest creditCardRequest){
+         return new ResponseEntity<>(creditCardService.addCreditCard(creditCardRequest), HttpStatus.CREATED);
     }
 
 
@@ -42,7 +46,12 @@ public class CreditCardController {
      * @return list of credit cards.
      */
     @GetMapping(path = "/creditCards")
-    public Collection<CreditCardRequest> getCreditCards(){
-        return creditCardService.getAllCreditCards();
+    public ResponseEntity getCreditCards(){
+
+        List<CreditCardRequest> creditCardRequests = creditCardService.getAllCreditCards();
+        if (null == creditCardRequests || creditCardRequests.isEmpty()){
+            return new ResponseEntity<>(ErrorMessage.NO_CARDS_FOUND, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(creditCardService.getAllCreditCards(), HttpStatus.OK);
     }
 }

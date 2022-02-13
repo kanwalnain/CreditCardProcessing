@@ -5,17 +5,18 @@ import github.kanwalnain.creditcard.entity.CreditCardEntity;
 import github.kanwalnain.creditcard.unit.validation.LuhnValidation;
 
 
-
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 public class CreditCardRequest {
 
     @LuhnValidation
-    @NotEmpty
+    @NotBlank
+    @Size(max = 19)
     private String cardNumber;
 
-    @NotEmpty
+    @NotBlank
     private String givenName;
 
     private Double limit;

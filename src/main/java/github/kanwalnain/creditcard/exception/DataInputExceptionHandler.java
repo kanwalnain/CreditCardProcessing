@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
  * Exception handler to validate data inputs from user.
  */
 @ControllerAdvice
-public class RequestExceptionHandler {
+public class DataInputExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     public ResponseEntity<List> processUnmergeException(final MethodArgumentNotValidException ex) {
 
         List list = ex.getBindingResult().getFieldErrors().stream()
-                .map(fieldError -> fieldError.getDefaultMessage())
+                .map(fieldError -> "["+fieldError.getField() + ":" +fieldError.getRejectedValue() +"]"+fieldError.getDefaultMessage())
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
