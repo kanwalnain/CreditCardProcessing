@@ -27,4 +27,4 @@ ARG DEPENDENCY=/credit-card-service/target/dependency
 COPY --from=microservice-build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=microservice-build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=microservice-build ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","github.kanwalnain.CreditCardApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","github.kanwalnain.creditcard.CreditCardApplication"]
