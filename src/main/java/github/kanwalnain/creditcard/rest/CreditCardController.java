@@ -3,6 +3,11 @@ package github.kanwalnain.creditcard.rest;
 import github.kanwalnain.creditcard.constant.ErrorMessage;
 import github.kanwalnain.creditcard.model.CreditCardRequest;
 import github.kanwalnain.creditcard.service.CreditCardService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,7 @@ import java.util.List;
  * @author Kanwal Nain Singh
  */
 @RestController
+@Tag(name = "Credit Cards", description = "Endpoints performing credit card api operations.")
 public class CreditCardController {
 
     private final Logger logger = LoggerFactory.getLogger(CreditCardController.class);
@@ -36,6 +42,20 @@ public class CreditCardController {
      * @return confirmation of credit card addition.
      */
     @PostMapping(path = "/creditCards")
+    @Operation(
+            summary = "Add a credit card.",
+            description = "API to register a new credit card.",
+            tags = { "Credit Cards" },
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreditCardRequest.class))
+                    ),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Bad Data Input", responseCode = "400", content = @Content)
+            }
+    )
     public ResponseEntity addCreditCard(@Valid @RequestBody CreditCardRequest creditCardRequest){
          return new ResponseEntity<>(creditCardService.addCreditCard(creditCardRequest), HttpStatus.CREATED);
     }
@@ -46,6 +66,19 @@ public class CreditCardController {
      * @return list of credit cards.
      */
     @GetMapping(path = "/creditCards")
+    @Operation(
+            summary = "Retrieve all credit cards.",
+            description = "API to register a new credit card.",
+            tags = { "Credit Cards" },
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreditCardRequest  .class))
+                    ),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
+            }
+    )
     public ResponseEntity getCreditCards(){
 
         List<CreditCardRequest> creditCardRequests = creditCardService.getAllCreditCards();
