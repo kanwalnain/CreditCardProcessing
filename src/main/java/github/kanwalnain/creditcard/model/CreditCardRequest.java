@@ -2,7 +2,7 @@ package github.kanwalnain.creditcard.model;
 
 
 import github.kanwalnain.creditcard.entity.CreditCardEntity;
-import github.kanwalnain.creditcard.validation.LuhnValidation;
+import github.kanwalnain.creditcard.unit.validation.LuhnValidation;
 
 
 

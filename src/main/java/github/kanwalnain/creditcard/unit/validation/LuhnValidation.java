@@ -1,4 +1,4 @@
-package github.kanwalnain.creditcard.validation;
+package github.kanwalnain.creditcard.unit.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

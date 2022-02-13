@@ -1,6 +1,4 @@
-package github.kanwalnain.creditcard.validation;
-
-import org.springframework.web.bind.MethodArgumentNotValidException;
+package github.kanwalnain.creditcard.unit.validation;
 
 import javax.validation.ConstraintValidator;
     import javax.validation.ConstraintValidatorContext;
