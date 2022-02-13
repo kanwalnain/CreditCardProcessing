@@ -3,6 +3,10 @@ package github.kanwalnain.creditcard.unit.validation;
 import javax.validation.ConstraintValidator;
     import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Validator to validate if input credit card number satisfy lunn 10 validation.
+ * @author Kanwal Nain Singh
+ */
 public class LuhnValidator implements ConstraintValidator<LuhnValidation, String> {
 
     public boolean isValid(String number, ConstraintValidatorContext cxt) {
@@ -13,6 +17,7 @@ public class LuhnValidator implements ConstraintValidator<LuhnValidation, String
         //Remove special characters from input number.
         number = number.replace("-", "");
         number = number.replace(" ", "");
+
         int sum = 0;
         try {
             boolean alternate = false;

@@ -1,5 +1,7 @@
 package github.kanwalnain.creditcard.unit.validation;
 
+import github.kanwalnain.creditcard.constant.ErrorMessage;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
@@ -17,7 +19,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 public @interface LuhnValidation {
 
     //error message
-    public String message() default "Invalid credit card number does not satisfy Luhn 10.";
+    public String message() default ErrorMessage.INVALID_CREDIT_CARD;
     //represents group of constraints
     public Class<?>[] groups() default {};
     //represents additional information about annotation

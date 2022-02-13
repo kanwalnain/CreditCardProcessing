@@ -5,6 +5,10 @@ import github.kanwalnain.creditcard.model.CreditCardRequest;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+/**
+ * Entity Class to persist credit card details.
+ * @Author  Kanwal Nain Singh
+ */
 @Entity
 @Table(name = "customers")
 public class CreditCardEntity {
@@ -22,6 +26,10 @@ public class CreditCardEntity {
 
     }
 
+    /**
+     * Generate credit card entity from credit card request.
+     * @param creditCardRequest
+     */
     public CreditCardEntity(CreditCardRequest creditCardRequest) {
         creditCardNumber = creditCardRequest.getCardNumber();
         creditLimit =  new BigDecimal(creditCardRequest.getLimit());
