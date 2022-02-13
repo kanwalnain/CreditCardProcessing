@@ -7,15 +7,10 @@ import github.kanwalnain.creditcard.validation.LuhnValidation;
 
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 
 public class CreditCardRequest {
 
-    //TODO: Move validation message to properties.
-    @Size(max = 19, message = "Max length can be up to 19.")
-    @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="Not a numeric value.")
     @LuhnValidation
     @NotEmpty
     private String cardNumber;

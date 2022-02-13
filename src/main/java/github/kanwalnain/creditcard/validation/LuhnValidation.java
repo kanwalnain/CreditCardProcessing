@@ -17,7 +17,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 public @interface LuhnValidation {
 
     //error message
-    public String message() default "Invalid number does not match Luhn 10.";
+    public String message() default "Invalid credit card number does not satisfy Luhn 10.";
     //represents group of constraints
     public Class<?>[] groups() default {};
     //represents additional information about annotation

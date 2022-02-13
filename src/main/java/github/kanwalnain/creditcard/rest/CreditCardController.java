@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.List;
+
 
 @RestController
 public class CreditCardController {
 
     private final Logger logger = LoggerFactory.getLogger(CreditCardController.class);
-    private int i=1;
+
     @Autowired
     private CreditCardService creditCardService;
 
