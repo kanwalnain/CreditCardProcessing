@@ -1,6 +1,7 @@
 package github.kanwalnain.creditcard.entity;
 
 import github.kanwalnain.creditcard.model.CreditCardRequest;
+import github.kanwalnain.creditcard.service.EncryptionService;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class CreditCardEntity {
      * @param creditCardRequest
      */
     public CreditCardEntity(CreditCardRequest creditCardRequest) {
-        creditCardNumber = creditCardRequest.getCardNumber();
+        creditCardNumber = EncryptionService.encrypt(creditCardRequest.getCardNumber());
         creditLimit =  new BigDecimal(creditCardRequest.getLimit());
         givenName = creditCardRequest.getGivenName();
         balance = BigDecimal.ZERO;

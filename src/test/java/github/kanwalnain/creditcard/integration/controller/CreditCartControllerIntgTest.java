@@ -4,14 +4,18 @@ import com.google.gson.Gson;
 import github.kanwalnain.creditcard.CreditCardApplication;
 import github.kanwalnain.creditcard.constant.ErrorMessage;
 import github.kanwalnain.creditcard.model.CreditCardRequest;
+import github.kanwalnain.creditcard.repository.CardDetailsRepository;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,6 +36,13 @@ public class CreditCartControllerIntgTest {
         headers.add("Content-Type", "application/json");
     }
 
+    @Autowired
+    private CardDetailsRepository cardDetailsRepository;
+
+    @After
+    public void cleanup(){
+        cardDetailsRepository.deleteAll();
+    }
     @Test
     public void testAddCreditCardApiSuccess(){
         CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User",250.0);
@@ -74,11 +85,29 @@ public class CreditCartControllerIntgTest {
         assertTrue("must not be blank", response.getBody().contains(ErrorMessage.INVALID_CREDIT_CARD));
     }
     @Test
-    public void testGetAllCreditCardSuccess(){
+    public void testGetAllCreditCardSuccessValidateSize(){
         setupDummyData();
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
          ResponseEntity<CreditCardRequest[]> creditCardRequests = restTemplate.exchange(createURLWithPort("/creditCards"), HttpMethod.GET, requestEntity, CreditCardRequest[].class);
-        assertEquals("Mismatch in expected records.", 3,creditCardRequests.getBody().length);
+        assertEquals("Mismatch in expected records.", 2,creditCardRequests.getBody().length);
+    }
+
+    @Test
+    public void testGetAllCreditCardSuccessValidateData(){
+        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",250.0);
+        Gson gson = new Gson();
+        headers.add("Content-Type", "application/json");
+        HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/creditCards"),
+                HttpMethod.POST, entity, String.class);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        ResponseEntity<CreditCardRequest[]> creditCardRequests = restTemplate.exchange(createURLWithPort("/creditCards"), HttpMethod.GET, requestEntity, CreditCardRequest[].class);
+        assertEquals("Mismatch in expected records.", 1,creditCardRequests.getBody().length);
+        assertEquals("CreditCard number did not match.", creditCardRequests.getBody()[0].getCardNumber(),creditCardRequest.getCardNumber());
+        assertEquals("Given name did not match.", creditCardRequests.getBody()[0].getGivenName(),creditCardRequest.getGivenName());
+        assertEquals("Limit did not match.", creditCardRequests.getBody()[0].getLimit(),creditCardRequest.getLimit());
+        assertEquals("Balance did not match.", creditCardRequests.getBody()[0].getBalance(), new BigDecimal("0.00"));
 
     }
 
