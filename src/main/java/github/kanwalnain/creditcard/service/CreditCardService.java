@@ -20,6 +20,6 @@ public class CreditCardService {
     }
 
     public List<CreditCardRequest> getAllCreditCards() {
-        return cardDetailsRepository.findAll().stream().map(a-> new CreditCardRequest(a)).collect(Collectors.toList());
+        return cardDetailsRepository.findAll().stream().map(creditCard-> new CreditCardRequest(creditCard)).collect(Collectors.toList());
     }
 }

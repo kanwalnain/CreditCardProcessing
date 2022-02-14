@@ -21,6 +21,8 @@ public class CreditCardRequest {
 
     private Double limit;
 
+    public CreditCardRequest() {
+    }
 
     public CreditCardRequest(String cardNumber, String givenName, Double limit) {
         this.cardNumber = cardNumber;
@@ -30,7 +32,7 @@ public class CreditCardRequest {
 
     public CreditCardRequest(CreditCardEntity creditCardEntity) {
          this.cardNumber = creditCardEntity.getCreditCardNumber();
-         this.givenName = creditCardEntity.getCreditCardNumber();
+         this.givenName = creditCardEntity.getGivenName();
          this.limit = creditCardEntity.getCreditLimit().doubleValue();
     }
 

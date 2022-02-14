@@ -25,8 +25,12 @@ public class CreditCartControllerIntgTest {
 
     TestRestTemplate restTemplate = new TestRestTemplate();
 
-    HttpHeaders headers = new HttpHeaders();
+    static HttpHeaders headers = new HttpHeaders();
 
+    static {
+        headers.add("Authorization", "Basic ZGVtb3VzZXI6ZGVtb3Bhc3M=");
+        headers.add("Content-Type", "application/json");
+    }
 
     @Test
     public void testAddCreditCardApiSuccess(){
@@ -72,8 +76,9 @@ public class CreditCartControllerIntgTest {
     @Test
     public void testGetAllCreditCardSuccess(){
         setupDummyData();
-        ResponseEntity<List> creditCardRequests = restTemplate.getForEntity(createURLWithPort("/creditCards"), List.class);
-        assertEquals("Mismatch in expected records.", 3,creditCardRequests.getBody().size());
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+         ResponseEntity<CreditCardRequest[]> creditCardRequests = restTemplate.exchange(createURLWithPort("/creditCards"), HttpMethod.GET, requestEntity, CreditCardRequest[].class);
+        assertEquals("Mismatch in expected records.", 3,creditCardRequests.getBody().length);
 
     }
 

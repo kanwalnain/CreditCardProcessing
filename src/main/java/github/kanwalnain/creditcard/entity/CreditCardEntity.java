@@ -69,6 +69,14 @@ public class CreditCardEntity {
         this.currency = currency;
     }
 
+    public String getGivenName() {
+        return givenName;
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
+
     @Override
     public String toString() {
         return "CreditCardEntity{" +

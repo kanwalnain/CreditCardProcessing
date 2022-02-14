@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestLuhnValidator {
+public class LuhnValidatorTest {
     private ConstraintValidatorContext constraintValidatorContext;
     private LuhnValidator luhnValidator;
     @Before

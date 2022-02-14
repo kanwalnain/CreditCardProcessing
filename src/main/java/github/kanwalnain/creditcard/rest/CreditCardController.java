@@ -1,6 +1,7 @@
 package github.kanwalnain.creditcard.rest;
 
 import github.kanwalnain.creditcard.constant.ErrorMessage;
+import github.kanwalnain.creditcard.model.ApiError;
 import github.kanwalnain.creditcard.model.CreditCardRequest;
 import github.kanwalnain.creditcard.service.CreditCardService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,10 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -28,6 +27,7 @@ import java.util.List;
  * @author Kanwal Nain Singh
  */
 @RestController
+@CrossOrigin
 @Tag(name = "Credit Cards", description = "Endpoints performing credit card api operations.")
 public class CreditCardController {
 
@@ -65,7 +65,7 @@ public class CreditCardController {
      * Retrieve list of all the credit cards saved in system.
      * @return list of credit cards.
      */
-    @GetMapping(path = "/creditCards")
+
     @Operation(
             summary = "Retrieve all credit cards.",
             description = "API to register a new credit card.",
@@ -79,12 +79,13 @@ public class CreditCardController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
             }
     )
-    public ResponseEntity getCreditCards(){
+    @GetMapping(path = "/creditCards")
+    public @ResponseBody  ResponseEntity getCreditCards(){
 
         List<CreditCardRequest> creditCardRequests = creditCardService.getAllCreditCards();
         if (null == creditCardRequests || creditCardRequests.isEmpty()){
-            return new ResponseEntity<>(ErrorMessage.NO_CARDS_FOUND, HttpStatus.NOT_FOUND);
+            new ResponseEntity<List<CreditCardRequest>>(creditCardRequests, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(creditCardService.getAllCreditCards(), HttpStatus.OK);
+        return new ResponseEntity<List<CreditCardRequest>>(creditCardService.getAllCreditCards(), HttpStatus.OK);
     }
 }
