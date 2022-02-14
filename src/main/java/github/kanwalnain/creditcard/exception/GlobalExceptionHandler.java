@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * Exception handler to validate data inputs from user.
  */
 @ControllerAdvice
-public class DataInputExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
