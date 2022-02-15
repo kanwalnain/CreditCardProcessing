@@ -7,6 +7,7 @@ import github.kanwalnain.creditcard.model.CreditCardRequest;
 import github.kanwalnain.creditcard.repository.CardDetailsRepository;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,8 +17,7 @@ import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
+
 
 import static org.junit.Assert.*;
 
@@ -44,20 +44,26 @@ public class CreditCartControllerIntgTest {
         cardDetailsRepository.deleteAll();
     }
     @Test
+    @DisplayName("Test case to validate successful addition of new card.")
     public void testAddCreditCardApiSuccess(){
+        //Create dummy card to add.
         CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User",250.0);
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
+
+        //Call service addition.
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/creditCards"),
                 HttpMethod.POST, entity, String.class);
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        //assert successful creation of new card.
+        assertEquals("Assert successful creation of new card.", HttpStatus.CREATED, response.getStatusCode());
     }
 
 
 
     @Test
+    @DisplayName("Test case to validate failure in addition of new card due to bad input.")
     public void testAddCreditCardApiInvalidCreditCardInput(){
         CreditCardRequest creditCardRequest = new CreditCardRequest("555555423425555554444", "Dummy User",250.0);
         Gson gson = new Gson();
@@ -84,6 +90,7 @@ public class CreditCartControllerIntgTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue("must not be blank", response.getBody().contains(ErrorMessage.INVALID_CREDIT_CARD));
     }
+
     @Test
     public void testGetAllCreditCardSuccessValidateSize(){
         setupDummyData();
@@ -126,6 +133,7 @@ public class CreditCartControllerIntgTest {
                 createURLWithPort("/creditCards"),
                 HttpMethod.POST, entity, String.class);
     }
+
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port +"/api"+ uri;
     }

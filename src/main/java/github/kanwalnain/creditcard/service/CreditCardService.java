@@ -6,6 +6,7 @@ import github.kanwalnain.creditcard.repository.CardDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,14 @@ public class CreditCardService {
     private CardDetailsRepository cardDetailsRepository;
 
     public CreditCardRequest addCreditCard(CreditCardRequest creditCardRequest) {
-        return new CreditCardRequest(cardDetailsRepository.save(new CreditCardEntity(creditCardRequest)));
+        CreditCardEntity creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).build();
+        //Set default balance as ZERO if no input.
+        if (null == creditCardEntity.getBalance()) {
+            creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).balance(BigDecimal.ZERO).build();
+        } else {
+            creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).build();
+        }
+        return new CreditCardRequest(cardDetailsRepository.save( creditCardEntity) );
     }
 
     public List<CreditCardRequest> getAllCreditCards() {

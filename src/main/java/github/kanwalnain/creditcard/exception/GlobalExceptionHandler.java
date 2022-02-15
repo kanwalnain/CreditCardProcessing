@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         List list = ex.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> "["+fieldError.getField() + ":" +fieldError.getRejectedValue() +"]"+fieldError.getDefaultMessage())
                 .collect(Collectors.toList());
-        ApiError apiError = new ApiError(list.toString(), HttpStatus.BAD_REQUEST);
+        ApiError apiError = new ApiError( list.toString(), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<ApiError> processUnmergeException(final Exception ex) {
 
-        ApiError apiError = new ApiError("Error while performing operation.", HttpStatus.INTERNAL_SERVER_ERROR);
+        ApiError apiError = new ApiError(ex.getLocalizedMessage(),  HttpStatus.INTERNAL_SERVER_ERROR );
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

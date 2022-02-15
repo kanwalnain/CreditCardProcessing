@@ -2,30 +2,30 @@ package github.kanwalnain.creditcard.model;
 
 import org.springframework.http.HttpStatus;
 
-public class ApiError  extends RuntimeException{
+import java.time.LocalDateTime;
+
+public class ApiError {
 
   private String errorMessage;
   private HttpStatus httpStatus;
+  private String time;
 
     public ApiError(String errorMessage, HttpStatus httpStatus) {
         this.errorMessage = errorMessage;
         this.httpStatus = httpStatus;
+        this.time = LocalDateTime.now().toString();
     }
 
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
 
-    public void setHttpStatus(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
+    public String getTime() {
+        return time;
     }
 
     @Override
@@ -33,6 +33,7 @@ public class ApiError  extends RuntimeException{
         return "ApiError{" +
                 "errorMessage='" + errorMessage + '\'' +
                 ", httpStatus=" + httpStatus +
+                ", time='" + time + '\'' +
                 '}';
     }
 }

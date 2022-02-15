@@ -5,87 +5,114 @@ import github.kanwalnain.creditcard.service.EncryptionService;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * Entity Class to persist credit card details.
  * @Author  Kanwal Nain Singh
  */
 @Entity
-@Table(name = "customers")
+@Table(name = "credit_card_details")
 public class CreditCardEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "credit_card_number")
     private String creditCardNumber;
+    @Column(name = "credit_limit")
     private BigDecimal creditLimit;
+    @Column(name = "given_name")
     private String givenName;
+    @Column(name="card_balance", columnDefinition="Decimal(10,2) default '0.00'")
     private BigDecimal balance;
-    private String currency = "GBP";
+
 
     public CreditCardEntity() {
 
     }
 
-    /**
-     * Generate credit card entity from credit card request.
-     * @param creditCardRequest
-     */
-    public CreditCardEntity(CreditCardRequest creditCardRequest) {
-        creditCardNumber = EncryptionService.encrypt(creditCardRequest.getCardNumber());
-        creditLimit =  new BigDecimal(creditCardRequest.getLimit());
-        givenName = creditCardRequest.getGivenName();
-        balance = BigDecimal.ZERO;
+    public Long getId() {
+        return id;
     }
 
     public String getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
-    }
-
     public BigDecimal getCreditLimit() {
         return creditLimit;
-    }
-
-    public void setCreditLimit(BigDecimal creditLimit) {
-        this.creditLimit = creditLimit;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public String getGivenName() {
         return givenName;
     }
 
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    @Override
-    public String toString() {
-        return "CreditCardEntity{" +
-                "id=" + id +
-                ", creditCardNumber='" + creditCardNumber + '\'' +
-                ", creditLimit=" + creditLimit +
-                ", balance=" + balance +
-                ", currency='" + currency + '\'' +
-                '}';
+    public static CreditCardEntity.CreditCardEntityBuilder builder() {
+        return new CreditCardEntity.CreditCardEntityBuilder();
+    }
+
+    private CreditCardEntity(final Long id, final String givenName, final String creditCardNumber, final  BigDecimal creditLimit, final  BigDecimal balance) {
+        this.id = id;
+        this.givenName = givenName;
+        this.creditLimit = creditLimit;
+        this.creditCardNumber = creditCardNumber;
+        this.balance = balance;
+    }
+
+    public static class CreditCardEntityBuilder {
+        private Long id;
+        private String creditCardNumber;
+        private BigDecimal creditLimit;
+        private String givenName;
+        private BigDecimal balance;
+
+        CreditCardEntityBuilder() {
+        }
+
+        public CreditCardEntity.CreditCardEntityBuilder id(final Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CreditCardEntity.CreditCardEntityBuilder name(final String givenName) {
+            this.givenName = givenName;
+            return this;
+        }
+
+        public CreditCardEntity.CreditCardEntityBuilder cardNumber(final String creditCardNumber) {
+            this.creditCardNumber = creditCardNumber;
+            return this;
+        }
+
+        public CreditCardEntity.CreditCardEntityBuilder limit(final BigDecimal creditLimit) {
+            this.creditLimit = creditLimit;
+            return this;
+        }
+
+        public CreditCardEntity.CreditCardEntityBuilder balance(final BigDecimal balance) {
+            this.balance = balance;
+            return this;
+        }
+
+        /**
+         * Generate credit card entity from credit card request.
+         * @param creditCardRequest
+         */
+        public CreditCardEntity.CreditCardEntityBuilder creditCardRequest(CreditCardRequest creditCardRequest) {
+            this.creditCardNumber = EncryptionService.encrypt(creditCardRequest.getCardNumber());
+            this.creditLimit =  new BigDecimal(creditCardRequest.getLimit());
+            this.givenName = creditCardRequest.getGivenName();
+            this.balance = creditCardRequest.getBalance();
+            return this;
+        }
+
+        public CreditCardEntity build() {
+            return new CreditCardEntity(this.id, this.givenName, this.creditCardNumber, this.creditLimit, this.balance);
+        }
     }
 }
