@@ -24,7 +24,7 @@ public class CreditCardEntity {
     private BigDecimal creditLimit;
     @Column(name = "given_name")
     private String givenName;
-    @Column(name="card_balance", columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name="card_balance")
     private BigDecimal balance;
 
 

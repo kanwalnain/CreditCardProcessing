@@ -28,10 +28,11 @@ public class CreditCardRequest {
     public CreditCardRequest() {
     }
 
-    public CreditCardRequest(String cardNumber, String givenName, Double limit) {
+    public CreditCardRequest(String cardNumber, String givenName, Double limit, BigDecimal balance) {
         this.cardNumber = cardNumber;
         this.givenName = givenName;
         this.limit = limit;
+        this.balance = balance;
     }
 
     public CreditCardRequest(CreditCardEntity creditCardEntity) {
@@ -39,6 +40,12 @@ public class CreditCardRequest {
          this.givenName = creditCardEntity.getGivenName();
          this.limit = creditCardEntity.getCreditLimit().doubleValue();
          this.balance = creditCardEntity.getBalance();
+    }
+
+    public CreditCardRequest(String cardNumber, String givenName, Double limit) {
+        this.cardNumber = cardNumber;
+        this.givenName = givenName;
+        this.limit = limit;
     }
 
     public String getCardNumber() {

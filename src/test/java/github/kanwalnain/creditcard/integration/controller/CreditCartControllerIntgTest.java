@@ -47,7 +47,7 @@ public class CreditCartControllerIntgTest {
     @DisplayName("Test case to validate successful addition of new card.")
     public void testAddCreditCardApiSuccess(){
         //Create dummy card to add.
-        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User",250.0);
+        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User",250.0, new BigDecimal(20.0));
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
@@ -100,7 +100,7 @@ public class CreditCartControllerIntgTest {
     }
 
     @Test
-    public void testGetAllCreditCardSuccessValidateData(){
+    public void testGetAllCreditCardSuccessValidateDataWithoutBalance(){
         CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",250.0);
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
@@ -118,6 +118,24 @@ public class CreditCartControllerIntgTest {
 
     }
 
+    @Test
+    public void testGetAllCreditCardSuccessValidateDataWithBalance(){
+        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",250.0,  new BigDecimal("15.00"));
+        Gson gson = new Gson();
+        headers.add("Content-Type", "application/json");
+        HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/creditCards"),
+                HttpMethod.POST, entity, String.class);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        ResponseEntity<CreditCardRequest[]> creditCardRequests = restTemplate.exchange(createURLWithPort("/creditCards"), HttpMethod.GET, requestEntity, CreditCardRequest[].class);
+        assertEquals("Mismatch in expected records.", 1,creditCardRequests.getBody().length);
+        assertEquals("CreditCard number did not match.", creditCardRequests.getBody()[0].getCardNumber(),creditCardRequest.getCardNumber());
+        assertEquals("Given name did not match.", creditCardRequests.getBody()[0].getGivenName(),creditCardRequest.getGivenName());
+        assertEquals("Limit did not match.", creditCardRequests.getBody()[0].getLimit(),creditCardRequest.getLimit());
+        assertEquals("Balance did not match.", creditCardRequests.getBody()[0].getBalance(), new BigDecimal("15.00"));
+
+    }
 
     public void setupDummyData(){
         CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",250.0);
