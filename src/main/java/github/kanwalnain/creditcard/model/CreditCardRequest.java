@@ -2,8 +2,9 @@ package github.kanwalnain.creditcard.model;
 
 
 import github.kanwalnain.creditcard.entity.CreditCardEntity;
-import github.kanwalnain.creditcard.service.EncryptionService;
-import github.kanwalnain.creditcard.unit.validation.LuhnValidation;
+import github.kanwalnain.creditcard.util.EncryptionService;
+import github.kanwalnain.creditcard.validation.LuhnValidation;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import javax.validation.constraints.NotBlank;
@@ -21,14 +22,15 @@ public class CreditCardRequest {
     @NotBlank
     private String givenName;
 
-    private Double limit;
+    private BigDecimal limit;
 
+    @Schema(required = false, hidden = true)
     private BigDecimal balance;
 
     public CreditCardRequest() {
     }
 
-    public CreditCardRequest(String cardNumber, String givenName, Double limit, BigDecimal balance) {
+    public CreditCardRequest(String cardNumber, String givenName, BigDecimal limit, BigDecimal balance) {
         this.cardNumber = cardNumber;
         this.givenName = givenName;
         this.limit = limit;
@@ -38,11 +40,11 @@ public class CreditCardRequest {
     public CreditCardRequest(CreditCardEntity creditCardEntity) {
          this.cardNumber = EncryptionService.decrypt(creditCardEntity.getCreditCardNumber());
          this.givenName = creditCardEntity.getGivenName();
-         this.limit = creditCardEntity.getCreditLimit().doubleValue();
+         this.limit = creditCardEntity.getCreditLimit();
          this.balance = creditCardEntity.getBalance();
     }
 
-    public CreditCardRequest(String cardNumber, String givenName, Double limit) {
+    public CreditCardRequest(String cardNumber, String givenName, BigDecimal limit) {
         this.cardNumber = cardNumber;
         this.givenName = givenName;
         this.limit = limit;
@@ -64,11 +66,17 @@ public class CreditCardRequest {
         this.givenName = givenName;
     }
 
-    public Double getLimit() {
+    public BigDecimal getLimit() {
         return limit;
     }
 
+    public void setLimit(BigDecimal limit) {
+        this.limit = limit;
+    }
 
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 
     public BigDecimal getBalance() {
         return balance;
@@ -80,6 +88,7 @@ public class CreditCardRequest {
                 "cardNumber='" + cardNumber + '\'' +
                 ", givenName='" + givenName + '\'' +
                 ", limit=" + limit +
+                ", balance=" + balance +
                 '}';
     }
 }

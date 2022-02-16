@@ -1,9 +1,7 @@
 package github.kanwalnain.creditcard.rest;
 
-import github.kanwalnain.creditcard.constant.ErrorMessage;
-import github.kanwalnain.creditcard.model.ApiError;
 import github.kanwalnain.creditcard.model.CreditCardRequest;
-import github.kanwalnain.creditcard.service.CreditCardService;
+import github.kanwalnain.creditcard.service.impl.CreditCardServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,10 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.Collection;
+
 import java.util.List;
 
 
@@ -34,7 +31,7 @@ public class CreditCardController {
     private final Logger logger = LoggerFactory.getLogger(CreditCardController.class);
 
     @Autowired
-    private CreditCardService creditCardService;
+    private CreditCardServiceImpl creditCardService;
 
     /**
      * Api to add credit card to database.
@@ -57,7 +54,10 @@ public class CreditCardController {
             }
     )
     public ResponseEntity addCreditCard(@Valid @RequestBody CreditCardRequest creditCardRequest){
-         return new ResponseEntity<>(creditCardService.addCreditCard(creditCardRequest), HttpStatus.CREATED);
+        logger.info("Add Credit Request Received: {}", creditCardRequest);
+        Boolean result = creditCardService.addCreditCard(creditCardRequest);
+        logger.info("Credit Card Details Added");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
@@ -81,11 +81,13 @@ public class CreditCardController {
     )
     @GetMapping(path = "/creditCards")
     public @ResponseBody  ResponseEntity getCreditCards(){
-
+        logger.info("Get All Credits Request Received");
         List<CreditCardRequest> creditCardRequests = creditCardService.getAllCreditCards();
         if (null == creditCardRequests || creditCardRequests.isEmpty()){
+            logger.info("Not credit card found.");
             new ResponseEntity<List<CreditCardRequest>>(creditCardRequests, HttpStatus.NOT_FOUND);
         }
+        logger.info("Get All Credits Response: {}", creditCardRequests);
         return new ResponseEntity<List<CreditCardRequest>>(creditCardService.getAllCreditCards(), HttpStatus.OK);
     }
 }

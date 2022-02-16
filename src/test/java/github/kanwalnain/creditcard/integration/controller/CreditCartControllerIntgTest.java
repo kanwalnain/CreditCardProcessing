@@ -47,7 +47,7 @@ public class CreditCartControllerIntgTest {
     @DisplayName("Test case to validate successful addition of new card.")
     public void testAddCreditCardApiSuccess(){
         //Create dummy card to add.
-        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User",250.0, new BigDecimal(20.0));
+        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User",new BigDecimal(250.0), new BigDecimal(20.0));
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
@@ -65,7 +65,7 @@ public class CreditCartControllerIntgTest {
     @Test
     @DisplayName("Test case to validate failure in addition of new card due to bad input.")
     public void testAddCreditCardApiInvalidCreditCardInput(){
-        CreditCardRequest creditCardRequest = new CreditCardRequest("555555423425555554444", "Dummy User",250.0);
+        CreditCardRequest creditCardRequest = new CreditCardRequest("555555423425555554444", "Dummy User",new BigDecimal(250.0));
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
@@ -80,7 +80,7 @@ public class CreditCartControllerIntgTest {
 
     @Test
     public void testAddCreditCardApiEmptyName(){
-        CreditCardRequest creditCardRequest = new CreditCardRequest("555555423425555554444", "",250.0);
+        CreditCardRequest creditCardRequest = new CreditCardRequest("555555423425555554444", "", new BigDecimal(250.0));
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
@@ -101,7 +101,7 @@ public class CreditCartControllerIntgTest {
 
     @Test
     public void testGetAllCreditCardSuccessValidateDataWithoutBalance(){
-        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",250.0);
+        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",new BigDecimal(250.0));
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
@@ -113,14 +113,14 @@ public class CreditCartControllerIntgTest {
         assertEquals("Mismatch in expected records.", 1,creditCardRequests.getBody().length);
         assertEquals("CreditCard number did not match.", creditCardRequests.getBody()[0].getCardNumber(),creditCardRequest.getCardNumber());
         assertEquals("Given name did not match.", creditCardRequests.getBody()[0].getGivenName(),creditCardRequest.getGivenName());
-        assertEquals("Limit did not match.", creditCardRequests.getBody()[0].getLimit(),creditCardRequest.getLimit());
+        assertEquals("Limit did not match.", creditCardRequests.getBody()[0].getLimit(),new BigDecimal("250.00"));
         assertEquals("Balance did not match.", creditCardRequests.getBody()[0].getBalance(), new BigDecimal("0.00"));
 
     }
 
     @Test
     public void testGetAllCreditCardSuccessValidateDataWithBalance(){
-        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",250.0,  new BigDecimal("15.00"));
+        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",new BigDecimal("250.00"),  new BigDecimal("15.00"));
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
@@ -138,7 +138,7 @@ public class CreditCartControllerIntgTest {
     }
 
     public void setupDummyData(){
-        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",250.0);
+        CreditCardRequest creditCardRequest = new CreditCardRequest("5555555555554444", "Dummy User1",new BigDecimal("250.00"));
         Gson gson = new Gson();
         headers.add("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
@@ -147,6 +147,7 @@ public class CreditCartControllerIntgTest {
                 HttpMethod.POST, entity, String.class);
         creditCardRequest.setCardNumber("6703 4444 4444 4449");
         creditCardRequest.setGivenName("Dummy User 2");
+        entity = new HttpEntity<String>( new Gson().toJson(creditCardRequest), headers);
         restTemplate.exchange(
                 createURLWithPort("/creditCards"),
                 HttpMethod.POST, entity, String.class);

@@ -1,5 +1,6 @@
 package github.kanwalnain.creditcard.unit.validation;
 
+import github.kanwalnain.creditcard.validation.LuhnValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

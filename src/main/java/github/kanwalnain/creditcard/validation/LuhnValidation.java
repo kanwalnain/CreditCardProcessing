@@ -1,4 +1,4 @@
-package github.kanwalnain.creditcard.unit.validation;
+package github.kanwalnain.creditcard.validation;
 
 import github.kanwalnain.creditcard.constant.ErrorMessage;
 
