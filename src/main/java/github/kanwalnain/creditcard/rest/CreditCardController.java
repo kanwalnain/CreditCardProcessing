@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +40,7 @@ public class CreditCardController {
      * @param creditCardRequest
      * @return confirmation of credit card addition.
      */
-    @PostMapping(path = "/creditCards")
+    @PostMapping(path = "/creditCards", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Add a credit card.",
             description = "API to register a new credit card.",
@@ -79,7 +81,7 @@ public class CreditCardController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content)
             }
     )
-    @GetMapping(path = "/creditCards")
+    @GetMapping(path = "/creditCards", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody  ResponseEntity getCreditCards(){
         logger.info("Get All Credits Request Received");
         List<CreditCardRequest> creditCardRequests = creditCardService.getAllCreditCards();
