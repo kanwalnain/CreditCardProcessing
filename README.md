@@ -18,7 +18,7 @@ Microservice to provide api for credit card operations.
 Docker Build and Run.
 ```docker
 docker build -t kanwalnain/creditcardprocessing .
-docker run -p 8082:8082  kanwalnain/creditcardprocessing
+docker run -p 8080:8080  kanwalnain/creditcardprocessing
 
 ```
 Maven Run
