@@ -20,7 +20,6 @@ jobs:
         username: ${{ secrets.HUB_USERNAME }}
         password: ${{ secrets.HUB_PASSWORD }}         
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag credit-card-service:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{ secrets.HUB_USERNAME }}/credit-card-service:$(date +%s)
     - name: Push the Docker image
-      run: docker push ${{ secrets.HUB_USERNAME }}/credit-card-service
-      
+      run: docker push ${{ secrets.HUB_USERNAME }}/credit-card-service:$(date +%s)
