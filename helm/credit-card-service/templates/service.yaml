@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: credit-card-processing-service
+  namespace: dev
   labels:
     app: credit-card-processing
 spec:

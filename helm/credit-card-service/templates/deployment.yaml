@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: credit-card-processing
-  namespace: creditcard
+  namespace: dev
   labels:
     app: credit-card-processing
 spec:
