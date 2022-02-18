@@ -22,5 +22,5 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag credit-card-service:$(date +%s)
     - name: Push the Docker image
-      run: docker push ${{ secrets.DOCKER_USER }}/credit-card-service
+      run: docker push ${{ secrets.HUB_USERNAME }}/credit-card-service
       
