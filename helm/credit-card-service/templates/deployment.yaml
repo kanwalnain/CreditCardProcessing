@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit-card-processing
+  namespace: creditcard
+  labels:
+    app: credit-card-processing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: credit-card-processing
+  template:
+    metadata:
+      labels:
+        app: credit-card-processing
+    spec:
+      containers:
+        - name: credit-card-processing
+          image: "kanwalnainsingh/creditcardprocessing:latest"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+
