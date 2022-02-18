@@ -24,10 +24,10 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /health
+              path: /api/actuator/health
               port: http
           readinessProbe:
             httpGet:
-              path: /health
+              path: /api/actuator/health
               port: http
 
