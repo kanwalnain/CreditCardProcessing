@@ -20,6 +20,7 @@ public class CreditCardServiceImpl implements CreditCardService {
     @Autowired
     private CardDetailsRepository cardDetailsRepository;
 
+    @Override
     public Boolean addCreditCard(CreditCardRequest creditCardRequest) {
         CreditCardEntity creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).build();
         //Set default balance as ZERO if no input.
@@ -31,7 +32,7 @@ public class CreditCardServiceImpl implements CreditCardService {
         cardDetailsRepository.save(creditCardEntity);
         return Boolean.TRUE;
     }
-
+    @Override
     public List<CreditCardRequest> getAllCreditCards() {
         List<CreditCardRequest> creditCardRequests = new ArrayList<>();
         creditCardRequests = cardDetailsRepository.findAll().stream().map(creditCard-> new CreditCardRequest(creditCard)).collect(Collectors.toList());
