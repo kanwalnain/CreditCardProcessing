@@ -14,5 +14,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Build Login
+      env: 
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: docker login -u $DOCKER_USER $DOCKER_PASSWORD
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag credit-card-service:$(date +%s)
+    - name: Push the Docker image
+      run: docker push ${{secrets.DOCKER_USER}}/credit-card-service
+      
