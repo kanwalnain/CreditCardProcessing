@@ -5,6 +5,8 @@ metadata:
   namespace: dev
   labels:
     app: credit-card-processing
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
     - port: 8080
