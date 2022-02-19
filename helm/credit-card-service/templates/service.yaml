@@ -9,9 +9,7 @@ metadata:
     cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
-    - port: 8080
-      targetPort: http
-      protocol: TCP
-      name: http
+    - port: 80
+      targetPort: 8080
   selector:
     app: credit-card-processing
