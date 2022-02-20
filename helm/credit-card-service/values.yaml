@@ -1,6 +1,6 @@
 app:
   env: dev
-  application-name: credit-card-processing
+  name: credit-card-processing
   image-name: creditcardprocessing
   image-version:
   replicas: 1
