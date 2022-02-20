@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,14 +22,10 @@ public class CreditCardServiceImpl implements CreditCardService {
     private CardDetailsRepository cardDetailsRepository;
 
     @Override
-    public Boolean addCreditCard(CreditCardRequest creditCardRequest) {
-        CreditCardEntity creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).build();
+    public Boolean addCreditCard(CreditCardRequest creditCardRequest){
         //Set default balance as ZERO if no input.
-        if (null == creditCardEntity.getBalance()) {
-            creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).balance(BigDecimal.ZERO).build();
-        } else {
-            creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).build();
-        }
+        Optional<BigDecimal> balance = Optional.ofNullable(creditCardRequest.getBalance());
+        CreditCardEntity creditCardEntity = CreditCardEntity.builder().creditCardRequest(creditCardRequest).balance(balance.orElse(BigDecimal.ZERO)).build();
         cardDetailsRepository.save(creditCardEntity);
         return Boolean.TRUE;
     }
