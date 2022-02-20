@@ -28,7 +28,7 @@ public class CreditCardEntity {
     private BigDecimal balance;
 
 
-    public CreditCardEntity() {
+    private CreditCardEntity() {
 
     }
 

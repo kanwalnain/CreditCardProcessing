@@ -5,8 +5,6 @@ import github.kanwalnain.creditcard.model.CreditCardRequest;
 import github.kanwalnain.creditcard.repository.CardDetailsRepository;
 import github.kanwalnain.creditcard.service.CreditCardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
