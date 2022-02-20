@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: credit-card-processing
-  namespace: dev
+  name: "{{ .Values.app.name }}"
+  namespace: "{{ .Values.app.env }}"
   labels:
-    app: credit-card-processing
+    app: "{{ .Values.app.name }}"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: credit-card-processing
+      app: "{{ .Values.app.name }}"
   template:
     metadata:
       labels:
-        app: credit-card-processing
+        app: "{{ .Values.app.name }}"
     spec:
       containers:
         - name: credit-card-processing
-          image: "kanwalnainsingh/creditcardprocessing:latest"
+          image: "kanwalnainsingh/{{ .Values.app.image }}:latest"
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: {{ .Values.app.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
