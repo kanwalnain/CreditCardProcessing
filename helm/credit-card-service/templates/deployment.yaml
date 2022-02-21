@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: credit-card-processing
-          image: "kanwalnainsingh/{{ .Values.app.image-name }}:{{ .Values.app.image-version }}"
+          image: "kanwalnainsingh/{{ .Values.app.image.name }}:{{ .Values.app.image.version }}"
           ports:
             - name: http
               containerPort: {{ .Values.app.port }}
