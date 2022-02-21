@@ -24,7 +24,7 @@ public class CreditCardRequest {
 
     private BigDecimal limit;
 
-    @Schema(required = false, hidden = true)
+    @Schema(required = false)
     private BigDecimal balance;
 
     public CreditCardRequest() {
