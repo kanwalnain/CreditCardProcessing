@@ -2,6 +2,6 @@ app:
   env: dev
   name: credit-card-processing
   image-name: creditcardprocessing
-  image-version:
+  image-version: latest
   replicas: 1
   port: 8080
