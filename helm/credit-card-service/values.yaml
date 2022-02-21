@@ -4,5 +4,5 @@ app:
   image:
     name: creditcardprocessing
     version: de3a960
-  replicas: 1
+  replicas: 2
   port: 8080
