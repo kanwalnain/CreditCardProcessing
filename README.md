@@ -1,5 +1,5 @@
 # Credit Card Service:
-[![Actions Status](https://github.com/kanwalnain/CreditCardProcessing/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/kanwalnain/CreditCardProcessing/actions)
+[![Actions Status](https://github.com/kanwalnain/CreditCardProcessing/workflows/Build%20and%20Test%20CI/badge.svg)](https://github.com/kanwalnain/CreditCardProcessing/actions)
 
 Microservice to provide api for credit card operations.
 
