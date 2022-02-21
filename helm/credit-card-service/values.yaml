@@ -3,6 +3,6 @@ app:
   name: credit-card-processing
   image:
     name: creditcardprocessing
-    version: de3a960
+    version: 5431bcd
   replicas: 2
   port: 8080
