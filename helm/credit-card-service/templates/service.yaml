@@ -11,4 +11,4 @@ spec:
     - port: 80
       targetPort: {{ .Values.app.port }}
   selector:
-    app: "{{ .Values.app.env }}"
+    app: "{{ .Values.app.name }}"
