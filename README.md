@@ -5,7 +5,7 @@ Api Operations:
 <img width="988" alt="Api Operations" src="https://user-images.githubusercontent.com/99208477/154868858-e9561db4-254e-4580-bf35-bb60ddee9970.png">
 
 
-CD Pipeline- ArgoCD on Google Kubernetes Engine: [ArgoCD](https://35.193.125.8/applications/credit-card-processing )
+CD Pipeline- ArgoCD on Google Kubernetes Engine: [ArgoCD](https://35.193.125.8/applications/credit-card-processing ) Demo user: admin pass: pJPak0E7H53B6RJW
 <img width="1076" alt="CI CD Pipeline" src="https://user-images.githubusercontent.com/99208477/154872757-b4400e57-2698-495d-9fac-6d7ff95621bd.png">
 
 <img width="1582" alt="CreditCardProcessing" src="https://user-images.githubusercontent.com/99208477/154868730-85c84330-8857-424f-9f4e-1192fd3524d3.png">
