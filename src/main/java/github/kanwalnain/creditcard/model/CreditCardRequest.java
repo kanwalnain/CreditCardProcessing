@@ -24,6 +24,7 @@ public class CreditCardRequest {
     private String givenName;
 
     @Schema(required = true)
+    @NotBlank
     private BigDecimal limit;
 
     @Schema(required = false)
