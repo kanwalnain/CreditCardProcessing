@@ -20,8 +20,10 @@ public class CreditCardRequest {
     private String cardNumber;
 
     @NotBlank
+    @Schema(required = true)
     private String givenName;
 
+    @Schema(required = true)
     private BigDecimal limit;
 
     @Schema(required = false)
