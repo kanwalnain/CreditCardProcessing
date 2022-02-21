@@ -3,6 +3,6 @@ app:
   name: credit-card-processing
   image:
     name: creditcardprocessing
-    version: $(git rev-parse --short HEAD)
+    version: de3a960
   replicas: 1
   port: 8080
