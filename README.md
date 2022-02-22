@@ -6,7 +6,7 @@ Microservice to provide api for credit card operations.
 
 Api Operations:
 [Open API 3.0 Swagger URL](http://34.122.130.87/api/swagger-ui/index.html) Test login details : username: demouser and password: demopass
-<img width="988" alt="Api Operations" src="https://user-images.githubusercontent.com/99208477/154868858-e9561db4-254e-4580-bf35-bb60ddee9970.png">
+<img width="752" alt="Screenshot 2022-02-22 at 12 34 04 AM" src="https://user-images.githubusercontent.com/99208477/155042446-f2880928-9e90-4f28-8488-21f2a1d087e4.png">
 
 
 CD Pipeline- ArgoCD on Google Kubernetes Engine: [ArgoCD](https://35.193.125.8/applications/credit-card-processing ) Demo user: admin pass: pJPak0E7H53B6RJW
