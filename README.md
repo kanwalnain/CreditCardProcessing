@@ -1,6 +1,7 @@
 # Credit Card Service:
 [![Actions Status](https://github.com/kanwalnain/CreditCardProcessing/workflows/Build%20and%20Test%20CI/badge.svg)](https://github.com/kanwalnain/CreditCardProcessing/actions)
-
+![Coverage](./badges/jacoco.svg)
+![Branches](./badges/branches.svg)
 Microservice to provide api for credit card operations.
 
 Api Operations:
