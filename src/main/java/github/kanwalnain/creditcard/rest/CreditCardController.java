@@ -20,6 +20,8 @@ import javax.validation.Valid;
 
 import java.util.List;
 
+import static github.kanwalnain.creditcard.constant.ErrorMessage.NO_CARDS_FOUND;
+
 
 /**
  * Credit card REST controller with api operation on credit card.
@@ -87,7 +89,7 @@ public class CreditCardController {
         List<CreditCardRequest> creditCardRequests = creditCardService.getAllCreditCards();
         if (null == creditCardRequests || creditCardRequests.isEmpty()){
             logger.info("Not credit card found.");
-            new ResponseEntity<List<CreditCardRequest>>(creditCardRequests, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(NO_CARDS_FOUND, HttpStatus.NOT_FOUND);
         }
         logger.info("Get All Credits Response: {}", creditCardRequests);
         return new ResponseEntity<List<CreditCardRequest>>(creditCardService.getAllCreditCards(), HttpStatus.OK);

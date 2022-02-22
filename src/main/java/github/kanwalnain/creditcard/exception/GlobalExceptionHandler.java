@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static github.kanwalnain.creditcard.constant.ErrorMessage.*;
+
 /**
  * Exception handler to validate data inputs from user.
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
@@ -36,7 +39,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<ApiError> processUnmergeException(final DataIntegrityViolationException ex) {
 
-        ApiError apiError = new ApiError("Credit card already registered.",  HttpStatus.CONFLICT );
+        ApiError apiError = new ApiError(CREDIT_CARD_ALREADY_REGISTERED,  HttpStatus.CONFLICT );
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
 
@@ -44,14 +47,14 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<ApiError> processUnmergeException(final DataAccessException ex) {
 
-        ApiError apiError = new ApiError("Unable to process data in your request invalid request.",  HttpStatus.INTERNAL_SERVER_ERROR );
+        ApiError apiError = new ApiError(UNABLE_TO_PROCESS_DATA_IN_YOUR_REQUEST_INVALID_REQUEST,  HttpStatus.INTERNAL_SERVER_ERROR );
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
     public ResponseEntity<ApiError> processUnmergeException(final HttpMessageNotReadableException ex) {
 
-        ApiError apiError = new ApiError("Bad data input please validate your request.",  HttpStatus.BAD_REQUEST );
+        ApiError apiError = new ApiError(BAD_DATA_INPUT_PLEASE_VALIDATE_YOUR_REQUEST,  HttpStatus.BAD_REQUEST );
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
@@ -61,7 +64,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<ApiError> processUnmergeException(final Exception ex) {
 
-        ApiError apiError = new ApiError("Unexpected error your request can not be processed. ",  HttpStatus.INTERNAL_SERVER_ERROR );
+        ApiError apiError = new ApiError(UNEXPECTED_ERROR_YOUR_REQUEST_CAN_NOT_BE_PROCESSED,  HttpStatus.INTERNAL_SERVER_ERROR );
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

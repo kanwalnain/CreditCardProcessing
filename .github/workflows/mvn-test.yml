@@ -1,0 +1,23 @@
+name: Maven Test and Coverage.
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**/README.md'
+      - '**/helm/**'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - '**/README.md'    
+      - '**/helm/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build with Maven
+      run: mvn -B test
+    - name: Generate JaCoCo Badge
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true

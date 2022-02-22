@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -73,6 +74,43 @@ public class CreditCardControllerTest {
     }
 
     @Test
+    @DisplayName("Test to validate failure in case of data access issue on adding credit card..")
+    public void testAddNewCreditCardApiFailureDatabaseException()  throws Exception{
+        //Create sample card.
+        CreditCardRequest creditCardRequest = new CreditCardRequest();
+        creditCardRequest.setGivenName("A B Singh");
+        creditCardRequest.setCardNumber("5555555555554444");
+        creditCardRequest.setLimit(new BigDecimal(250.0));
+        creditCardRequest.setBalance(new BigDecimal(50.0));
+        Mockito.doThrow(new DataAccessException(""){}).when(creditCardService).addCreditCard(Mockito.any(CreditCardRequest.class));
+
+        mvc.perform(MockMvcRequestBuilders.post("/creditCards")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic ZGVtb3VzZXI6ZGVtb3Bhc3M=")
+                        .content(new Gson().toJson(creditCardRequest).toString()))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+
+    @Test
+    @DisplayName("Test to validate failure in case of data access issue on adding credit card..")
+    public void testAddNewCreditCardApiFailureRuntimeException()  throws Exception{
+        //Create sample card.
+        CreditCardRequest creditCardRequest = new CreditCardRequest();
+        creditCardRequest.setGivenName("A B Singh");
+        creditCardRequest.setCardNumber("5555555555554444");
+        creditCardRequest.setLimit(new BigDecimal(250.0));
+        creditCardRequest.setBalance(new BigDecimal(50.0));
+        Mockito.doThrow(new RuntimeException("Random")).when(creditCardService).addCreditCard(Mockito.any(CreditCardRequest.class));
+
+        mvc.perform(MockMvcRequestBuilders.post("/creditCards")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic ZGVtb3VzZXI6ZGVtb3Bhc3M=")
+                        .content(new Gson().toJson(creditCardRequest).toString()))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+    @Test
     @DisplayName("Test to validate failure in case of invalid credit card..")
     public void testAddNewCreditCardApiInvalidCard()  throws Exception{
         //Create sample card.
@@ -82,7 +120,6 @@ public class CreditCardControllerTest {
         creditCardRequest.setLimit(new BigDecimal(250.0));
         creditCardRequest.setBalance(new BigDecimal(50.0));
 
-        //Mockito.when(creditCardService.addCreditCard(Mockito.any(CreditCardRequest.class))).thenThrow(new DataIntegrityViolationException("Duplicate Data"){});
         mvc.perform(MockMvcRequestBuilders.post("/creditCards")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -109,6 +146,17 @@ public class CreditCardControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Basic ZGVtb3VzZXI6ZGVtb3Bhc3M="))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+    }
+    @Test
+    @DisplayName("Test to fetch empty credit card result.")
+    public void testGetAllCreditCardEmptyResult()  throws Exception{
+
+        //Mock getAllCredits service call
+        Mockito.when(creditCardService.getAllCreditCards()).thenReturn(null);
+        mvc.perform(MockMvcRequestBuilders.get("/creditCards")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic ZGVtb3VzZXI6ZGVtb3Bhc3M="))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
